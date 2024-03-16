@@ -4,7 +4,7 @@
     <application
         android:allowBackup="false"
         android:fullBackupContent="false"
-        android:label="${appName}"
+        android:label="Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:allowBackup">
