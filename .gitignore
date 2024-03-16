@@ -44,5 +44,5 @@ app.*.map.json
 /android/app/release
 
 # Exclude fvm and vscode
-.fvm
+.fvm/flutter_sdk
 .vscode
