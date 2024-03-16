@@ -1,5 +1,5 @@
-import 'package:calculator2/presentation/components/material_color_generator.dart';
-import 'package:calculator2/presentation/designs/app_color.dart';
+import 'package:flutter_calculator_2/presentation/components/material_color_generator.dart';
+import 'package:flutter_calculator_2/presentation/designs/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

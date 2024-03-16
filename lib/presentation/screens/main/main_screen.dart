@@ -1,9 +1,9 @@
-import 'package:calculator2/data/models/calculation.dart';
-import 'package:calculator2/helpers/utils.dart';
-import 'package:calculator2/logic/cubits/calculation/calculation_cubit.dart';
-import 'package:calculator2/logic/cubits/history/history_cubit.dart';
-import 'package:calculator2/logic/cubits/theme/theme_cubit.dart';
-import 'package:calculator2/presentation/screens/profile/profile_screen.dart';
+import 'package:flutter_calculator_2/data/models/calculation.dart';
+import 'package:flutter_calculator_2/helpers/utils.dart';
+import 'package:flutter_calculator_2/logic/cubits/calculation/calculation_cubit.dart';
+import 'package:flutter_calculator_2/logic/cubits/history/history_cubit.dart';
+import 'package:flutter_calculator_2/logic/cubits/theme/theme_cubit.dart';
+import 'package:flutter_calculator_2/presentation/screens/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,6 +13,7 @@ class ButtonModel {
   final double size;
   final bool isBold;
   final bool isPortrait;
+  final String resourceId;
 
   ButtonModel({
     required this.operator,
@@ -20,6 +21,7 @@ class ButtonModel {
     this.size = 26.0,
     this.isBold = false,
     this.isPortrait = true,
+    required this.resourceId,
   });
 }
 
@@ -36,31 +38,32 @@ class _MainScreenState extends State<MainScreen> {
   bool _isHistoryVisible = false;
   final ScrollController _scrollController = ScrollController();
   final List<ButtonModel> buttons = [
-    ButtonModel(operator: 'C', tooltip: 'Clear'),
-    ButtonModel(operator: '()', tooltip: 'Brackets'),
-    ButtonModel(operator: '%', tooltip: 'Percentage', isBold: true),
-    ButtonModel(operator: '÷', tooltip: 'Division', size: 32.0, isBold: true),
-    ButtonModel(operator: '7'),
-    ButtonModel(operator: '8'),
-    ButtonModel(operator: '9'),
+    ButtonModel(operator: 'C', tooltip: 'Clear', resourceId: 'qa_clear_btn'),
+    ButtonModel(operator: '()', tooltip: 'Brackets', resourceId: 'qa_brackets_btn'),
+    ButtonModel(operator: '%', tooltip: 'Percentage', isBold: true, resourceId: 'qa_percentage_btn'),
+    ButtonModel(operator: '÷', tooltip: 'Division', size: 32.0, isBold: true, resourceId: 'qa_division_btn'),
+    ButtonModel(operator: '7', resourceId: 'qa_7_btn'),
+    ButtonModel(operator: '8', resourceId: 'qa_8_btn'),
+    ButtonModel(operator: '9', resourceId: 'qa_9_btn'),
     ButtonModel(
       operator: '×',
       tooltip: 'Multiplication',
       size: 32.0,
       isBold: true,
+      resourceId: 'qa_multiplication_btn',
     ),
-    ButtonModel(operator: '4'),
-    ButtonModel(operator: '5'),
-    ButtonModel(operator: '6'),
-    ButtonModel(operator: '-', tooltip: 'Minus', size: 32.0, isBold: true),
-    ButtonModel(operator: '1'),
-    ButtonModel(operator: '2'),
-    ButtonModel(operator: '3'),
-    ButtonModel(operator: '+', tooltip: 'Plus', size: 32.0, isBold: true),
-    ButtonModel(operator: '+/-'),
-    ButtonModel(operator: '0'),
-    ButtonModel(operator: '.'),
-    ButtonModel(operator: '=', tooltip: 'Equal', size: 32.0, isBold: true),
+    ButtonModel(operator: '4', resourceId: 'qa_4_btn'),
+    ButtonModel(operator: '5', resourceId: 'qa_5_btn'),
+    ButtonModel(operator: '6', resourceId: 'qa_6_btn'),
+    ButtonModel(operator: '-', tooltip: 'Minus', size: 32.0, isBold: true, resourceId: 'qa_minus_btn'),
+    ButtonModel(operator: '1', resourceId: 'qa_1_btn'),
+    ButtonModel(operator: '2', resourceId: 'qa_2_btn'),
+    ButtonModel(operator: '3', resourceId: 'qa_3_btn'),
+    ButtonModel(operator: '+', tooltip: 'Plus', size: 32.0, isBold: true, resourceId: 'qa_plus_btn'),
+    ButtonModel(operator: '+/-', resourceId: 'qa_plus_minus_btn'),
+    ButtonModel(operator: '0', resourceId: 'qa_0_btn'),
+    ButtonModel(operator: '.', resourceId: 'qa_dot_btn'),
+    ButtonModel(operator: '=', tooltip: 'Equal', size: 32.0, isBold: true, resourceId: 'qa_equal_btn'),
   ];
 
   @override
@@ -127,27 +130,30 @@ class _MainScreenState extends State<MainScreen> {
                       Expanded(
                         child: SingleChildScrollView(
                           controller: _scrollController,
-                          child: SelectableText.rich(
-                            TextSpan(
-                              children: List<InlineSpan>.generate(
-                                question.length,
-                                (index) => TextSpan(
-                                  text: question[index],
-                                  style: TextStyle(
-                                    color: !Utils.isNumber(question[index])
-                                        ? Theme.of(context).primaryColor
-                                        : null,
+                          child: Semantics(
+                            identifier: 'qa_question',
+                            child: SelectableText.rich(
+                              TextSpan(
+                                children: List<InlineSpan>.generate(
+                                  question.length,
+                                  (index) => TextSpan(
+                                    text: question[index],
+                                    style: TextStyle(
+                                      color: !Utils.isNumber(question[index])
+                                          ? Theme.of(context).primaryColor
+                                          : null,
+                                    ),
                                   ),
-                                ),
-                              ).toList(),
-                            ),
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              fontSize: increase1
-                                  ? increase2
-                                      ? 26.0
-                                      : 28.0
-                                  : 40.0,
+                                ).toList(),
+                              ),
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontSize: increase1
+                                    ? increase2
+                                        ? 26.0
+                                        : 28.0
+                                    : 40.0,
+                              ),
                             ),
                           ),
                         ),
@@ -155,25 +161,28 @@ class _MainScreenState extends State<MainScreen> {
                       if (answer != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 22.0),
-                          child: SelectableText.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: '=',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
+                          child: Semantics(
+                            identifier: 'qa_answer',
+                            child: SelectableText.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: '=',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
                                   ),
-                                ),
-                                TextSpan(
-                                  text: Utils.formatAmount(
-                                      answer.toString().length > 15
-                                          ? answer.toStringAsExponential(8)
-                                          : answer.toString()),
-                                ),
-                              ],
+                                  TextSpan(
+                                    text: Utils.formatAmount(
+                                        answer.toString().length > 15
+                                            ? answer.toStringAsExponential(8)
+                                            : answer.toString()),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.end,
+                              style: const TextStyle(fontSize: 32.0),
                             ),
-                            textAlign: TextAlign.end,
-                            style: const TextStyle(fontSize: 32.0),
                           ),
                         ),
                     ],
@@ -226,16 +235,19 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                         Tooltip(
                           message: 'Delete',
-                          child: IconButton(
-                            splashRadius: 20.0,
-                            disabledColor:
-                                Theme.of(context).primaryColor.withOpacity(0.4),
-                            color: Theme.of(context).primaryColor,
-                            onPressed: isInitial
-                                ? null
-                                : () =>
-                                    context.read<CalculationCubit>().onDelete(),
-                            icon: const Icon(Icons.backspace_outlined),
+                          child: Semantics(
+                            identifier: 'qa_delete_btn',
+                            child: IconButton(
+                              splashRadius: 20.0,
+                              disabledColor:
+                                  Theme.of(context).primaryColor.withOpacity(0.4),
+                              color: Theme.of(context).primaryColor,
+                              onPressed: isInitial
+                                  ? null
+                                  : () =>
+                                      context.read<CalculationCubit>().onDelete(),
+                              icon: const Icon(Icons.backspace_outlined),
+                            ),
                           ),
                         ),
                       ],
@@ -403,63 +415,66 @@ class __ButtonItemState extends State<_ButtonItem> {
     final size = widget.buttonModel.size;
     final isBold = widget.buttonModel.isBold;
 
-    return Tooltip(
-      message: tooltip,
-      child: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          shape: BoxShape.circle,
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(100),
-            onTapUp: (details) {
-              setState(() {
-                _longPress = null;
-              });
-            },
-            onTapDown: (details) {
-              setState(() {
-                _longPress = operator;
-              });
-            },
-            onTapCancel: () {
-              setState(() {
-                _longPress = null;
-              });
-            },
-            onTap: () async {
-              setState(() {
-                _longPress = operator;
-              });
-              if (isDelete) {
-                context.read<CalculationCubit>().onDelete();
-              } else if (isClear) {
-                context.read<CalculationCubit>().onClear();
-              } else if (isEqual) {
-                context.read<CalculationCubit>().onEqual();
-              } else {
-                context.read<CalculationCubit>().onAdd(operator);
-              }
-              await Future.delayed(const Duration(milliseconds: 100));
-              setState(() {
-                _longPress = null;
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: FittedBox(
-                  child: AnimatedDefaultTextStyle(
-                    duration: const Duration(milliseconds: 100),
-                    style: TextStyle(
-                      color: color,
-                      fontSize: size - (isHold ? 5 : 0),
-                      letterSpacing: isParentheses ? 8 : null,
-                      fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+    return Semantics(
+      identifier: widget.buttonModel.resourceId,
+      child: Tooltip(
+        message: tooltip,
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            shape: BoxShape.circle,
+          ),
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(100),
+              onTapUp: (details) {
+                setState(() {
+                  _longPress = null;
+                });
+              },
+              onTapDown: (details) {
+                setState(() {
+                  _longPress = operator;
+                });
+              },
+              onTapCancel: () {
+                setState(() {
+                  _longPress = null;
+                });
+              },
+              onTap: () async {
+                setState(() {
+                  _longPress = operator;
+                });
+                if (isDelete) {
+                  context.read<CalculationCubit>().onDelete();
+                } else if (isClear) {
+                  context.read<CalculationCubit>().onClear();
+                } else if (isEqual) {
+                  context.read<CalculationCubit>().onEqual();
+                } else {
+                  context.read<CalculationCubit>().onAdd(operator);
+                }
+                await Future.delayed(const Duration(milliseconds: 100));
+                setState(() {
+                  _longPress = null;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: FittedBox(
+                    child: AnimatedDefaultTextStyle(
+                      duration: const Duration(milliseconds: 100),
+                      style: TextStyle(
+                        color: color,
+                        fontSize: size - (isHold ? 5 : 0),
+                        letterSpacing: isParentheses ? 8 : null,
+                        fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+                      ),
+                      child: Text(operator),
                     ),
-                    child: Text(operator),
                   ),
                 ),
               ),

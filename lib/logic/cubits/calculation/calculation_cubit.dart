@@ -1,6 +1,6 @@
-import 'package:calculator2/data/models/calculation.dart';
-import 'package:calculator2/helpers/utils.dart';
-import 'package:calculator2/logic/cubits/history/history_cubit.dart';
+import 'package:flutter_calculator_2/data/models/calculation.dart';
+import 'package:flutter_calculator_2/helpers/utils.dart';
+import 'package:flutter_calculator_2/logic/cubits/history/history_cubit.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_expressions/math_expressions.dart';
