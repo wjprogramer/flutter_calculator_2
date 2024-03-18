@@ -1,6 +1,7 @@
 import time
 from typing import Optional
 
+import allure
 import pytest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
@@ -39,3 +40,15 @@ def close_app():
     yield driver
     time.sleep(1)
     driver.quit()
+
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+    if report.when == 'call' and report.failed:
+        # 將錯誤截圖附於測試報告
+        driver.save_screenshot('report/' + item.name + '.png')
+        allure.attach.file('report/' + item.name + '.png', attachment_type=allure.attachment_type.PNG)
+        # 將錯誤訊息附於測試報告
+        allure.attach(report.longreprtext, attachment_type=allure.attachment_type.TEXT)

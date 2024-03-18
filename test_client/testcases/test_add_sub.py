@@ -41,4 +41,4 @@ class TestSubAdd:
             driver.find_element(By.ID, 'qa_equal_btn').click()
             actual_result = driver.find_element(By.ID, 'qa_answer').text
         with allure.step('驗證實際結果是否正確'):
-            assert actual_result == '=1'
+            assert actual_result == '=1', '結果不為1'
