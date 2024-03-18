@@ -28,3 +28,17 @@ class TestSubAdd:
             name='加法運算結果',
             attachment_type=allure.attachment_type.PNG
         )
+
+    @allure.story('減法運算')
+    @allure.title('驗證計算機能否正常完成減法功能')
+    def test_sub(self, start_app, close_app):
+        with allure.step('啟動 App'):
+            driver = start_app
+        with allure.step('依序按下5、-、3、='):
+            driver.find_element(By.ID, 'qa_5_btn').click()
+            driver.find_element(By.ID, 'qa_minus_btn').click()
+            driver.find_element(By.ID, 'qa_3_btn').click()
+            driver.find_element(By.ID, 'qa_equal_btn').click()
+            actual_result = driver.find_element(By.ID, 'qa_answer').text
+        with allure.step('驗證實際結果是否正確'):
+            assert actual_result == '=1'
