@@ -1,5 +1,4 @@
 import allure
-from appium.webdriver.webdriver import By
 
 from models.page_objects.calculator_page import CalculatorPage
 
