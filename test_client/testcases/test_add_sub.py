@@ -10,10 +10,9 @@ class TestSubAdd:
 
     @allure.story('加法運算')
     @allure.title('驗證計算機能否正常完成加法功能')
-    def test_add(self, start_app, close_app):
-        with allure.step('啟動 App'):
-            driver = start_app
-            calc_page = CalculatorPage(driver)
+    def test_add(self, setup):
+        calc_page = CalculatorPage(setup)
+
         with allure.step('依序按下1、+、2、='):
             calc_page.click_number(1)
             calc_page.click_plus()
@@ -22,21 +21,13 @@ class TestSubAdd:
             actual_result = calc_page.get_result()
         with allure.step('驗證實際結果是否正確'):
             assert actual_result == '=3'
-
-        # 附上截圖
-        # （可以將 attach 縮排，會將結果附於 step 裡）
-        allure.attach(
-            driver.get_screenshot_as_png(),
-            name='加法運算結果',
-            attachment_type=allure.attachment_type.PNG
-        )
+        calc_page.add_screenshot_attach('加法運算結果')
 
     @allure.story('減法運算')
     @allure.title('驗證計算機能否正常完成減法功能')
-    def test_sub(self, start_app, close_app):
-        with allure.step('啟動 App'):
-            driver = start_app
-            calc_page = CalculatorPage(driver)
+    def test_sub(self, setup):
+        calc_page = CalculatorPage(setup)
+
         with allure.step('依序按下5、-、3、='):
             calc_page.click_number(5)
             calc_page.click_minus()

@@ -23,20 +23,14 @@ deviceCapabilities = {
 }
 
 
-# 啟動 App
+# 啟動 App -> 執行 -> 關閉 App
 @pytest.fixture()
-def start_app():
+def setup():
     global driver
     driver = webdriver.Remote(
         appium_server_url,
         options=UiAutomator2Options().load_capabilities(deviceCapabilities)
     )
-    return driver
-
-
-# 關閉 App
-@pytest.fixture()
-def close_app():
     yield driver
     time.sleep(1)
     driver.quit()
