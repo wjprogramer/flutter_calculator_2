@@ -3,6 +3,7 @@ from typing import Optional
 
 import allure
 import pytest
+from pytest import FixtureRequest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
@@ -24,14 +25,16 @@ deviceCapabilities = {
 
 
 # 啟動 App -> 執行 -> 關閉 App
-@pytest.fixture()
-def setup():
+@pytest.fixture(scope='function')
+def setup_and_teardown(request: FixtureRequest):
     global driver
     driver = webdriver.Remote(
         appium_server_url,
         options=UiAutomator2Options().load_capabilities(deviceCapabilities)
     )
-    yield driver
+    # 設定 class 的 property
+    request.cls.driver = driver
+    yield
     time.sleep(1)
     driver.quit()
 
