@@ -18,10 +18,11 @@ class TestSubAdd:
         calc_page = CalculatorPage(self.driver)
 
         with allure.step('依序按下1、+、2、='):
-            calc_page.click_number(1)
-            calc_page.click_plus()
-            calc_page.click_number(2)
-            calc_page.click_equal()
+            calc_page \
+                .click_number(1) \
+                .click_plus() \
+                .click_number(2) \
+                .click_equal()
             actual_result = calc_page.get_result()
         with allure.step('驗證實際結果是否正確'):
             assert actual_result == '=3'
@@ -34,10 +35,10 @@ class TestSubAdd:
         calc_page = CalculatorPage(self.driver)
 
         with allure.step(f'依序按下{n}、+、{n}、='):
-            calc_page.click_number(n)
-            calc_page.click_plus()
-            calc_page.click_number(n)
-            calc_page.click_equal()
+            (calc_page.click_number(n)
+             .click_plus()
+             .click_number(n)
+             .click_equal())
             actual_result = calc_page.get_result()
         with allure.step('驗證實際結果是否正確'):
             assert actual_result == f'={expected}', f'結果不為{expected}'
