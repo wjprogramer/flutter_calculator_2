@@ -7,21 +7,25 @@ from pytest import FixtureRequest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
+from src.utils import load_capabilities
+
 driver: Optional[webdriver.Remote] = None
 appium_server_url = 'http://localhost:4723'
 
 deviceCapabilities = {
     # -- Device 設定 ------------------------------------------------
-    'deviceName': 'R5CT20DXADK',  # 透過指令 adb devices 取得
-    'platformVersion': '14',  # 需要看對應的裝置手機版本
+    'deviceName': '',  # 透過指令 adb devices 取得
+    'platformVersion': '',  # 需要看對應的裝置手機版本
+    'platformName': '',
     # ---------------------------------------------------------------
     'appPackage': 'com.example.flutter_calculator_2',
-    'platformName': 'Android',
     'automationName': 'uiautomator2',
     'appActivity': '.MainActivity',
     'autoGrantPermissions': True,
     'appium:disableIdLocatorAutocompletion': True,
 }
+
+deviceCapabilities.update(load_capabilities()[0])
 
 
 # 啟動 App -> 執行 -> 關閉 App
