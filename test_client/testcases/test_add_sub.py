@@ -12,6 +12,7 @@ from appium import webdriver
 class TestSubAdd:
     driver: webdriver.Remote
 
+    @allure.severity(allure.severity_level.CRITICAL)
     @allure.story('加法運算')
     @allure.title('驗證計算機能否正常完成加法功能')
     def test_add(self):
