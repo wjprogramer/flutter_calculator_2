@@ -16,6 +16,12 @@ def load_capabilities():
     return config['capabilities']
 
 
+def get_appium_server_url() -> str:
+    with open('appium.json') as f:
+        config = json.load(f)
+    return config['server']['url']
+
+
 def get_target_devices_from_args() -> list[str]:
     """
     讀取指令取得指定 devices

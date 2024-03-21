@@ -7,10 +7,9 @@ from pytest import FixtureRequest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
-from src.utils import get_device_capability
+from src.utils import get_device_capability, get_appium_server_url
 
 driver: Optional[webdriver.Remote] = None
-appium_server_url = 'http://localhost:4723'
 
 
 # 啟動 App -> 執行 -> 關閉 App
@@ -18,6 +17,7 @@ appium_server_url = 'http://localhost:4723'
 def setup_and_teardown(request: FixtureRequest):
     global driver
     device_capability = get_device_capability()
+    appium_server_url = get_appium_server_url()
     driver = webdriver.Remote(
         appium_server_url,
         options=UiAutomator2Options().load_capabilities(device_capability)
