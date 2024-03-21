@@ -7,34 +7,20 @@ from pytest import FixtureRequest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
-from src.utils import load_capabilities
+from src.utils import get_device_capability
 
 driver: Optional[webdriver.Remote] = None
 appium_server_url = 'http://localhost:4723'
-
-deviceCapabilities = {
-    # -- Device 設定 ------------------------------------------------
-    'deviceName': '',  # 透過指令 adb devices 取得
-    'platformVersion': '',  # 需要看對應的裝置手機版本
-    'platformName': '',
-    # ---------------------------------------------------------------
-    'appPackage': 'com.example.flutter_calculator_2',
-    'automationName': 'uiautomator2',
-    'appActivity': '.MainActivity',
-    'autoGrantPermissions': True,
-    'appium:disableIdLocatorAutocompletion': True,
-}
-
-deviceCapabilities.update(load_capabilities()[0])
 
 
 # 啟動 App -> 執行 -> 關閉 App
 @pytest.fixture(scope='function')
 def setup_and_teardown(request: FixtureRequest):
     global driver
+    device_capability = get_device_capability()
     driver = webdriver.Remote(
         appium_server_url,
-        options=UiAutomator2Options().load_capabilities(deviceCapabilities)
+        options=UiAutomator2Options().load_capabilities(device_capability)
     )
     # 設定 class 的 property
     request.cls.driver = driver

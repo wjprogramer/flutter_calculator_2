@@ -1,4 +1,13 @@
 {
+  "base_capability": {
+    "Android": {
+      "appPackage": "com.example.flutter_calculator_2",
+      "automationName": "uiautomator2",
+      "appActivity": ".MainActivity",
+      "autoGrantPermissions": true,
+      "appium:disableIdLocatorAutocompletion": true
+    }
+  },
   "capabilities": [
     {
       "id": "jay_samsung_a52s",
