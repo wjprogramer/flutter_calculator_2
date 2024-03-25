@@ -43,9 +43,21 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: Config.appName,
             onGenerateRoute: AppRouter().onGenerateRoute,
-            builder: (context, child) => ScrollConfiguration(
-              behavior: CustomScrollBehavior(),
-              child: child ?? Container(),
+            builder: (context, child) => Container(
+              color: Colors.grey.shade200,
+              alignment: Alignment.center,
+              child: ClipRect(
+                child: Container(
+                  height: double.infinity,
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ),
+                  child: ScrollConfiguration(
+                    behavior: CustomScrollBehavior(),
+                    child: child ?? Container(),
+                  ),
+                ),
+              ),
             ),
           );
         },
