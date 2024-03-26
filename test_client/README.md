@@ -86,6 +86,8 @@ Ref
 
 ![](screenshots/setup_capabiity_params_2.png)
 
+如果有多台，以 `,` 區分，例： `--devices simulator_iphone_15_pro_max,jay_samsung_a52s`
+
 ## References
 
 - [PyTest Testing Framework](https://www.youtube.com/playlist?list=PLsjUcU8CQXGECu4Sl1IwrguGRU0iQGt3E)

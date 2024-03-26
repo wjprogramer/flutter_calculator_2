@@ -52,3 +52,31 @@ def get_device_capability():
     }
 
     return target_capability
+
+
+def get_device_capabilities():
+    device_capabilities = load_capabilities()
+    target_devices = get_target_devices_from_args()
+
+    if target_devices is None:
+        return []
+
+    target_capabilities = []
+    for capability in device_capabilities:
+        if capability['id'] in target_devices:
+            target_capabilities.append({
+                **load_base_capability()['Common'],
+                **load_base_capability()[capability['platformName']],
+                **capability
+            })
+
+    # 這個寫法同上面，但感覺比較難讀
+    # target_capabilities = [
+    #     {
+    #         **load_base_capability()['Common'],
+    #         **load_base_capability()[capability['platformName']],
+    #         **capability
+    #     } for capability in device_capabilities if capability['id'] in target_devices
+    # ]
+
+    return target_capabilities

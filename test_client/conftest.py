@@ -3,22 +3,29 @@ from typing import Optional
 
 import allure
 import pytest
+from _pytest.fixtures import SubRequest
 from appium.options.common import AppiumOptions
 from appium.options.ios import XCUITestOptions
-from pytest import FixtureRequest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
-from src.utils import get_device_capability, get_appium_server_url
+from src.utils import get_appium_server_url, get_device_capabilities
 
 driver: Optional[webdriver.Remote] = None
 
+deviceList = get_device_capabilities()
+deviceIdList = [device['id'] for device in deviceList]
+
+deviceCapabilitiesMap = {}
+for device in deviceList:
+    deviceCapabilitiesMap[device['id']] = device
+
 
 # 啟動 App -> 執行 -> 關閉 App
-@pytest.fixture(scope='function')
-def setup_and_teardown(request: FixtureRequest):
+@pytest.fixture(params=deviceIdList, scope='function')
+def setup_and_teardown(request: SubRequest):
     global driver
-    device_capability = get_device_capability()
+    device_capability = deviceCapabilitiesMap[request.param]
     appium_server_url = get_appium_server_url()
 
     options: AppiumOptions = UiAutomator2Options() \
@@ -37,7 +44,7 @@ def setup_and_teardown(request: FixtureRequest):
 
 
 @pytest.hookimpl(hookwrapper=True, tryfirst=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item):
     outcome = yield
     report = outcome.get_result()
     if report.when == 'call' and report.failed:
