@@ -1,6 +1,8 @@
 {
   "server": {
-    "url": "http://localhost:4723"
+    "urls": [
+      "http://localhost:4723"
+    ]
   },
   "base_capability": {
     "Common": {

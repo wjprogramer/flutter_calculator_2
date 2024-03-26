@@ -95,3 +95,4 @@ Ref
 - [How to create ipa file in flutter for testing purpose?](https://stackoverflow.com/questions/58724420/how-to-create-ipa-file-in-flutter-for-testing-purpose)
 - [Appium Desired Capabilities](https://appium.readthedocs.io/en/stable/en/writing-running-appium/caps/)
 - [appium-setup/real-devices-ios](https://appium.readthedocs.io/en/stable/cn/appium-setup/real-devices-ios/)
+- [執行多個裝置（照順序）](https://stackoverflow.com/questions/61594859/running-the-same-pytest-with-different-setup)

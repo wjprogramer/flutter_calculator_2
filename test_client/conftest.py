@@ -9,7 +9,7 @@ from appium.options.ios import XCUITestOptions
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
 
-from src.utils import get_appium_server_url, get_device_capabilities
+from src.utils import get_device_capabilities, get_appium_server_urls
 
 driver: Optional[webdriver.Remote] = None
 
@@ -26,7 +26,9 @@ for device in deviceList:
 def setup_and_teardown(request: SubRequest):
     global driver
     device_capability = deviceCapabilitiesMap[request.param]
-    appium_server_url = get_appium_server_url()
+    index = deviceIdList.index(request.param)
+    server_urls = get_appium_server_urls()
+    appium_server_url = server_urls[index % len(server_urls)]
 
     options: AppiumOptions = UiAutomator2Options() \
         if device_capability['platformName'] == 'Android' \
