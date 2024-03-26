@@ -3,12 +3,20 @@
     "url": "http://localhost:4723"
   },
   "base_capability": {
+    "Common": {
+    },
     "Android": {
       "appPackage": "com.example.flutter_calculator_2",
       "automationName": "uiautomator2",
       "appActivity": ".MainActivity",
       "autoGrantPermissions": true,
       "appium:disableIdLocatorAutocompletion": true
+    },
+    "iOS": {
+      "automationName": "XCUITest",
+      "xcodeSigningId": "iPhone Developer",
+      "xcodeOrgId": "",
+      "useNewWDA": true
     }
   },
   "capabilities": [
@@ -17,6 +25,22 @@
       "deviceName": "R5CT20DXADK",
       "platformVersion": "14",
       "platformName": "Android"
+    },
+    {
+      "id": "jay_ipad_air_4",
+      "udid": "00008101-00060C180E43001E",
+      "deviceName": "Jay_iPad_Air_4_own (17.3.1)",
+      "platformVersion": "17.3.1",
+      "platformName": "iOS",
+      "app": "/Users/wuja/Downloads/flutter_calculator_2.ipa"
+    },
+    {
+      "id": "simulator_iphone_15_pro_max",
+      "platformVersion": "17.4",
+      "platformName": "iOS",
+      "deviceName": "iPhone 15 Pro Max Simulator (17.4)",
+      "udid": "FA66C572-17AA-42C1-BF15-84296DE478F8",
+      "bundleId": "com.example.flutterCalculator2"
     }
   ]
 }

@@ -34,18 +34,19 @@ def get_target_devices_from_args() -> list[str]:
 
 def get_device_capability():
     device_capabilities = load_capabilities()
-    devices = get_target_devices_from_args()
+    target_device = get_target_devices_from_args()[0]
 
     target_capability: Optional[dict] = None
-    if devices is not None:
+    if target_device is not None:
         for capability in device_capabilities:
-            if capability['deviceName'] == devices:
+            if capability['id'] == target_device:
                 target_capability = capability
                 break
     if target_capability is None:
         target_capability = device_capabilities[0]
 
     target_capability = {
+        **load_base_capability()['Common'],
         **load_base_capability()[target_capability['platformName']],
         **target_capability,
     }
